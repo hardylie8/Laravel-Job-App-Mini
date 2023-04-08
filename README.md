@@ -13,8 +13,13 @@
     ```bash
     $ php artisan migrate:fresh --seed
     ```
-    
-    Serve
+
+-   Testing
+    ```bash
+    $ php artisan test
+    ```
+
+-   Serve
     ```bash
     $ php artisan serve
     ```
