@@ -15,6 +15,6 @@ final class SkillBuilder extends Builder
      */
     public function __construct()
     {
-        $this->builder = QueryBuilder::for(Skill::class);
+        $this->builder = QueryBuilder::for(Skill::class)->allowedFilters(['name']);
     }
 }
