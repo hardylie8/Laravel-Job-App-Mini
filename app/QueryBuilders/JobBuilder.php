@@ -14,6 +14,6 @@ final class JobBuilder extends Builder
      */
     public function __construct()
     {
-        $this->builder = QueryBuilder::for(Jobs::class);
+        $this->builder = QueryBuilder::for(Jobs::class)->allowedFilters(['name']);
     }
 }
