@@ -3,6 +3,8 @@
 namespace Database\Factories;
 
 use App\Models\Candidate;
+use App\Models\Jobs;
+use App\Models\Skill;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,14 +21,23 @@ class CandidateFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
+            'job_id' => Jobs::factory(),
             'email' => $this->faker->safeEmail(),
             'phone' => $this->faker->phoneNumber(),
-            'year' => 2023,
-
-            'created_by' => $this->faker->randomDigit(),
-            'updated_by' => $this->faker->randomDigit(),
-            'deleted_by' => $this->faker->randomDigit(),
-
+            'year' => 1999,
         ];
+    }
+
+    /**
+     * seed skill table and skillset table
+     *
+     * @return static
+     */
+    public function configure()
+    {
+        return $this->afterCreating(function (Candidate $item) {
+            $skill = Skill::factory()->count(2)->create()->pluck('id', 'id');
+            $item->skills()->sync($skill);
+        });
     }
 }

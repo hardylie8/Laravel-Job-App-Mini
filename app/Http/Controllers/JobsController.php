@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\JobCollection;
+use App\Http\Resources\JobResource;
 use App\Models\Jobs;
+use App\QueryBuilders\JobBuilder;
+use App\QueryBuilders\QueryBuilder;
 use Illuminate\Http\Request;
 
 class JobsController extends Controller
@@ -12,30 +16,15 @@ class JobsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(JobBuilder $query)
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+        return (new JobCollection($query->paginate()))
+            ->additional(
+                [
+                    'status' => 200,
+                    'message' => 'Data Has been successfully retrieved'
+                ]
+            );
     }
 
     /**
@@ -44,42 +33,13 @@ class JobsController extends Controller
      * @param  \App\Models\Jobs  $jobs
      * @return \Illuminate\Http\Response
      */
-    public function show(Jobs $jobs)
+    public function show(JobBuilder $query, Jobs $job)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Jobs  $jobs
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Jobs $jobs)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Jobs  $jobs
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Jobs $jobs)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Jobs  $jobs
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Jobs $jobs)
-    {
-        //
+        return (new JobResource($query->find($job->getKey())))->additional(
+            [
+                'status' => 200,
+                'message' => 'Data Has been successfully retrieved'
+            ]
+        );
     }
 }

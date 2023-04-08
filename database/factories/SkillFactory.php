@@ -17,7 +17,7 @@ class SkillFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name(),
+            'name' => $this->faker->word(),
             'created_by' => $this->faker->randomDigit(),
             'updated_by' => $this->faker->randomDigit(),
             'deleted_by' => $this->faker->randomDigit(),

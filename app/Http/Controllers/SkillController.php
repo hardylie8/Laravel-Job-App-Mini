@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\SkillCollection;
+use App\Http\Resources\SkillResource;
 use App\Models\Skill;
+use App\QueryBuilders\SkillBuilder;
 use Illuminate\Http\Request;
 
 class SkillController extends Controller
@@ -12,30 +15,15 @@ class SkillController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(SkillBuilder $query)
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+        return (new SkillCollection($query->paginate()))
+            ->additional(
+                [
+                    'status' => 200,
+                    'message' => 'Data Has been successfully retrieved'
+                ]
+            );
     }
 
     /**
@@ -44,42 +32,13 @@ class SkillController extends Controller
      * @param  \App\Models\Skill  $skill
      * @return \Illuminate\Http\Response
      */
-    public function show(Skill $skill)
+    public function show(SkillBuilder $query, Skill $skill)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Skill  $skill
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Skill $skill)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Skill  $skill
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Skill $skill)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Skill  $skill
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Skill $skill)
-    {
-        //
+        return (new SkillResource($query->find($skill->getKey())))->additional(
+            [
+                'status' => 200,
+                'message' => 'Data Has been successfully retrieved'
+            ]
+        );
     }
 }

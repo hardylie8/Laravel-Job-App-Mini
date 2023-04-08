@@ -24,6 +24,8 @@ return new class extends Migration
             $table->integer('updated_by')->nullable()->unsigned();
             $table->integer('deleted_by')->nullable()->unsigned();
 
+            $table->foreignId('job_id')->constrained('jobs');
+
             $table->timestamps();
             $table->softDeletes();
         });
